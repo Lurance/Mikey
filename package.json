@@ -1,0 +1,34 @@
+{
+  "name": "mikey",
+  "version": "0.0.1",
+  "description": "Pending....",
+  "main": "index.js",
+  "scripts": {
+    "start": "export NODE_ENV=development; ts-node app.ts",
+    "nodemon_test": "export NODE_ENV=development; nodemon dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lurance/Mikey.git"
+  },
+  "author": "Lurance",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lurance/Mikey/issues"
+  },
+  "homepage": "https://github.com/Lurance/Mikey#readme",
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "mongoose": "^5.0.16"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.45",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/mocha": "^5.2.0",
+    "@types/mongoose": "^5.0.10",
+    "mocha": "^5.1.1",
+    "ts-node": "^6.0.0",
+    "typescript": "^2.8.3"
+  }
+}
