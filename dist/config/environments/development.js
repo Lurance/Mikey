@@ -7,8 +7,11 @@ exports.default = {
         host: '127.0.0.1',
         port: 27017,
         database: 'Mikey',
-        user: '',
-        password: ''
-    }
+        user: null,
+        password: null,
+        nopass: true
+    },
+    jwtsecret: 'jcfvoernvono234mcw',
+    expiresIn: '30d'
 };
 //# sourceMappingURL=development.js.map

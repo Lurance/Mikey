@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
-    identity: 'development',
+    identity: 'test',
     port: 3000,
     mongo: {
         host: '127.0.0.1',
         port: 27017,
         database: 'Mikey',
-        user: '',
-        password: ''
+        user: null,
+        password: null,
+        nopass: true
     }
 };
 //# sourceMappingURL=test.js.map

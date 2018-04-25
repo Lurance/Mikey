@@ -10,9 +10,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
+require("./connection");
+const router_1 = require("./router");
+const environments_1 = require("./environments");
+const json = require("koa-json");
+const jwt = require("koa-jwt");
 exports.createServer = () => __awaiter(this, void 0, void 0, function* () {
     const app = new Koa();
     app.use(bodyParser());
+    environments_1.Environment.identity !== 'production' && app.use(json());
+    app.use(jwt({ secret: environments_1.Environment.jwtsecret }).unless({
+        path: [
+            /\/api\/v1\/login/,
+            /\/api\/v1\/admin\/login/
+        ]
+    }));
+    app.use(router_1.default.routes()).use(router_1.default.allowedMethods());
     return app;
 });
 //# sourceMappingURL=application.js.map

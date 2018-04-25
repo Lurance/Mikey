@@ -1,5 +1,5 @@
 export default {
-    identity: 'development',
+    identity: 'production',
 
     port: 3000,
 

@@ -26,6 +26,7 @@ Mocha v 5.1.1
 ├── @types                  --- 自动生成的类型定义文件
 ├── dist                    --- 编译生成的js文件
 ├── app
+│   ├── middlewares         ---  中间件
 │   ├── controllers         ---  控制器
 │   ├── utils               ---  帮助工具集
 │   ├── jobs                ---  定时任务

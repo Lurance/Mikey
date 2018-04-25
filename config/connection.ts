@@ -2,12 +2,12 @@ import * as mongoose from 'mongoose'
 
 import {Environment} from './environments'
 
-const {user, password, host, port, database} = Environment.mongo;
+const {user, password, host, port, database, nopass} = Environment.mongo;
 
-const path = `mongodb://${user}:${password}@${host}:${port}/${database}`;
+const path = nopass ? `mongodb://${host}:${port}/${database}` : `mongodb://${user}:${password}@${host}:${port}/${database}`;
 
 mongoose.connection
-    .once('error', err => console.log(`mongodb connect error:\n${err}`))
+    .once('error', err => console.error(`mongodb connect error:\n${err}`))
     .once('open', () => {
         Environment.identity !== 'test' && console.log('mongodb connect success')
     });
@@ -15,3 +15,7 @@ mongoose.connection
 mongoose.connect(path)
     .then()
     .catch(err => console.log(err));
+
+export {
+    mongoose
+}
