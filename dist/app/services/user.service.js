@@ -30,7 +30,7 @@ class UserService {
         });
     }
     static genJWToken(user) {
-        const token = jsonwebtoken_1.sign({ openid: user.openid, usertype: user.usertype }, environments_1.Environment.jwtsecret, {
+        const token = jsonwebtoken_1.sign({ openid: user.openid, usertype: user.usertype, username: user.username }, environments_1.Environment.jwtsecret, {
             expiresIn: environments_1.Environment.expiresIn
         });
         return {

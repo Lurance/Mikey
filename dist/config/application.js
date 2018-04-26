@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
 require("./connection");
-const router_1 = require("./router");
+const routers_1 = require("./routers");
 const environments_1 = require("./environments");
 const json = require("koa-json");
 const jwt = require("koa-jwt");
@@ -25,7 +25,7 @@ exports.createServer = () => __awaiter(this, void 0, void 0, function* () {
             /\/api\/v1\/admin\/login/
         ]
     }));
-    app.use(router_1.default.routes()).use(router_1.default.allowedMethods());
+    app.use(routers_1.default.routes()).use(routers_1.default.allowedMethods());
     return app;
 });
 //# sourceMappingURL=application.js.map

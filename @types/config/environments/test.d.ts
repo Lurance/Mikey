@@ -5,8 +5,11 @@ declare const _default: {
         host: string;
         port: number;
         database: string;
-        user: string;
-        password: string;
+        user: any;
+        password: any;
+        nopass: boolean;
     };
+    jwtsecret: string;
+    expiresIn: string;
 };
 export default _default;

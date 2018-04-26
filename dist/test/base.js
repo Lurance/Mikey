@@ -8,10 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const base_1 = require("./base");
-describe('Test user Module', () => {
-    before(() => __awaiter(this, void 0, void 0, function* () {
-        this.server = yield base_1.app();
-    }));
+process.env.NODE_ENV = 'test';
+const server = require("../app");
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+chai.use(chaiHttp);
+let timer;
+const closeServer = () => {
+    timer && clearTimeout(timer);
+    timer = setTimeout(() => {
+        process.exit(0);
+        clearTimeout(timer);
+    }, 2000);
+};
+exports.app = () => __awaiter(this, void 0, void 0, function* () {
+    closeServer();
+    return chai.request(yield server);
 });
-//# sourceMappingURL=user.test.js.map
+//# sourceMappingURL=base.js.map

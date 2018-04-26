@@ -23,6 +23,12 @@ const userSchema = new mongoose_1.Schema({
         type: Number,
         default: 2,
         required: true
+    },
+    meta: {
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
     }
 });
 exports.User = mongoose_1.model('User', userSchema);

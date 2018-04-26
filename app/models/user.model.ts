@@ -6,10 +6,13 @@ export enum Usertype {
 }
 
 export interface IUser extends Document{
-    username?: string,
-    openid?: string,
-    password?: string,
-    usertype: Usertype
+    username?: string;
+    openid?: string;
+    password?: string;
+    usertype: Usertype;
+    meta: {
+        createdAt: string
+    }
 }
 
 const userSchema: Schema = new Schema({
@@ -29,6 +32,12 @@ const userSchema: Schema = new Schema({
         type: Number,
         default: 2,
         required: true
+    },
+    meta: {
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
     }
 });
 

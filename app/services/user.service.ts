@@ -23,7 +23,7 @@ export class UserService {
     }
 
     static genJWToken(user: IUser): object {
-        const token = sign({openid: user.openid, usertype: user.usertype}, Environment.jwtsecret, {
+        const token = sign({openid: user.openid, usertype: user.usertype, username: user.username}, Environment.jwtsecret, {
             expiresIn: Environment.expiresIn
         });
         return {

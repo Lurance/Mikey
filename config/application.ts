@@ -4,7 +4,7 @@ import * as bodyParser from "koa-bodyparser";
 
 import './connection'
 
-import router from "./router";
+import router from "./routers";
 
 import {Environment} from "./environments";
 
