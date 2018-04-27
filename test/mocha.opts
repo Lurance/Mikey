@@ -4,4 +4,5 @@
 --ui bdd
 --timeout 60000
 --watch-extensions ts
+--reporter mochawesome
 test/**/*.ts

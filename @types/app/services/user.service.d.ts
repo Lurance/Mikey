@@ -4,4 +4,5 @@ export declare class UserService {
     static getUserFromOrCreate(condition: any): Promise<IUser>;
     static genJWToken(user: IUser): object;
     static authUser(username: string, password: string, usertype: number): Promise<object>;
+    static makeFriend(fromFriendKey: string, toFriendKey: string): Promise<object>;
 }

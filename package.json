@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV=development; ts-node app.ts",
-    "nodemon_test": "export NODE_ENV=development; nodemon dist/app.js",
+    "nodemon_test": "export NODE_ENV=development; ./node_modules/.bin/nodemon dist/app.js",
     "test": "./node_modules/.bin/mocha"
   },
   "repository": {
@@ -19,9 +19,6 @@
   },
   "homepage": "https://github.com/Lurance/Mikey#readme",
   "dependencies": {
-    "@types/http-errors": "^1.6.1",
-    "@types/js-md5": "^0.4.2",
-    "@types/koa-json": "^2.0.18",
     "axios": "^0.18.0",
     "http-errors": "^1.6.3",
     "js-md5": "^0.7.3",
@@ -38,9 +35,12 @@
     "@types/axios": "^0.14.0",
     "@types/chai": "^4.1.3",
     "@types/chai-http": "^3.0.4",
+    "@types/http-errors": "^1.6.1",
+    "@types/js-md5": "^0.4.2",
     "@types/jsonwebtoken": "^7.2.6",
     "@types/koa": "^2.0.45",
     "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-json": "^2.0.18",
     "@types/koa-jwt": "^3.3.0",
     "@types/koa-router": "^7.0.28",
     "@types/mocha": "^5.2.0",
@@ -49,6 +49,8 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "mocha": "^5.1.1",
+    "mochawesome": "^3.0.2",
+    "nodemon": "^1.17.3",
     "ts-node": "^6.0.0",
     "typescript": "^2.8.3"
   }

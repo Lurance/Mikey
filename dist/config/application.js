@@ -22,7 +22,8 @@ exports.createServer = () => __awaiter(this, void 0, void 0, function* () {
     app.use(jwt({ secret: environments_1.Environment.jwtsecret }).unless({
         path: [
             /\/api\/v1\/login/,
-            /\/api\/v1\/admin\/login/
+            /\/api\/v1\/admin\/login/,
+            /\/api\/v1\/admin\/user/
         ]
     }));
     app.use(routers_1.default.routes()).use(routers_1.default.allowedMethods());

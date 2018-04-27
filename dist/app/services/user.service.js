@@ -30,7 +30,7 @@ class UserService {
         });
     }
     static genJWToken(user) {
-        const token = jsonwebtoken_1.sign({ openid: user.openid, usertype: user.usertype, username: user.username }, environments_1.Environment.jwtsecret, {
+        const token = jsonwebtoken_1.sign({ openid: user.openid, usertype: user.usertype, username: user.username, friendkey: user.friendkey }, environments_1.Environment.jwtsecret, {
             expiresIn: environments_1.Environment.expiresIn
         });
         return {
@@ -44,6 +44,21 @@ class UserService {
             if (u)
                 return UserService.genJWToken(u);
             throw createHttpError(401, '认证失败');
+        });
+    }
+    static makeFriend(fromFriendKey, toFriendKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const toUser = yield models_1.User.findOne({ friendkey: toFriendKey });
+            const fromUser = yield models_1.User.findOne({ friendkey: fromFriendKey });
+            if (fromUser.friendIds.findIndex(v => v._id.toString() === toUser._id.toString()) !== -1) {
+                throw createHttpError(400, '已添加过该好友');
+            }
+            yield fromUser.update({ $push: { friendIds: { username: toUser.username, _id: toUser._id } } });
+            yield toUser.update({ $push: { friendIds: { username: fromUser.username, _id: fromUser._id } } });
+            return {
+                username: toUser.username,
+                _id: toUser._id
+            };
         });
     }
 }

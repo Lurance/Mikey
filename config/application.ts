@@ -22,9 +22,10 @@ export const createServer = async () => {
     app.use(jwt({secret: Environment.jwtsecret}).unless({
         path: [
             /\/api\/v1\/login/,
-            /\/api\/v1\/admin\/login/
+            /\/api\/v1\/admin\/login/,
+            /\/api\/v1\/admin\/user/
         ]
-    }))
+    }));
 
     app.use(router.routes()).use(router.allowedMethods());
 

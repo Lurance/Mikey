@@ -1,1 +1,2 @@
-export declare const app: () => any;
+/// <reference types="chai-http" />
+export declare const app: () => Promise<ChaiHttp.Agent>;

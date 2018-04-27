@@ -6,17 +6,9 @@ import {wechatConfig} from "../../config/wechat.config";
 
 import * as createHttpError from "http-errors";
 
-import {UserService} from "../services/user.service";
+import {UserService} from "../services";
 
 export class UserController {
-    static async t(ctx: Context): Promise<void> {
-        ctx.body = 't'
-    }
-
-    static async at(ctx: Context): Promise<void> {
-        ctx.body = 'at'
-    }
-
     static async wechatLogin(ctx: Context): Promise<void> {
         const code = ctx.request.body.code;
         await Axios.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${wechatConfig.appid}&secret=${wechatConfig.appsecret}&js_code=${code}&grant_type=authorization_code`)
@@ -36,6 +28,11 @@ export class UserController {
                 throw createHttpError(401, err.message)
             })
     }
+
+    static async addFriend(ctx: Context): Promise<void> {
+        const {friendkey} = ctx.request.body;
+        ctx.body = await UserService.makeFriend(ctx.state.user.friendkey, friendkey);
+    }
 }
 
 export class UserAdminController {
@@ -46,5 +43,11 @@ export class UserAdminController {
             username: username,
             usertype: 1
         }
+    }
+
+    static async createuser(ctx: Context): Promise<void> {
+        // Do not use it at PRODUCTION
+        const {username, password} = ctx.request.body;
+        ctx.body = await UserService.getUserFromOrCreate({username: username, password: password, usertype: 1})
     }
 }
