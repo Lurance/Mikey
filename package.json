@@ -1,12 +1,12 @@
 {
   "name": "mikey",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "这是参加腾讯全国小程序比赛的项目的公共后端库",
   "main": "index.js",
   "scripts": {
-    "start": "export NODE_ENV=development; ts-node app.ts",
-    "nodemon_test": "export NODE_ENV=development; ./node_modules/.bin/nodemon dist/app.js",
-    "test": "./node_modules/.bin/mocha"
+    "start": "./node_modules/.bin/nodemon index.ts",
+    "test": "./node_modules/.bin/mocha",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -19,17 +19,24 @@
   },
   "homepage": "https://github.com/Lurance/Mikey#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.1",
     "axios": "^0.18.0",
     "http-errors": "^1.6.3",
     "js-md5": "^0.7.3",
     "jsonwebtoken": "^8.2.1",
-    "koa": "^2.5.0",
-    "koa-bodyparser": "^4.2.0",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-helmet": "^4.0.0",
     "koa-json": "^2.0.2",
-    "koa-jwt": "^3.3.1",
+    "koa-jwt": "^3.3.2",
+    "koa-multer": "^1.0.2",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.0.16",
-    "ms": "^2.1.1"
+    "koa2-cors": "^2.0.5",
+    "mongoose": "^5.1.1",
+    "ms": "^2.1.1",
+    "reflect-metadata": "^0.1.12",
+    "routing-controllers": "^0.7.7",
+    "typedi": "^0.7.3"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -37,21 +44,26 @@
     "@types/chai-http": "^3.0.4",
     "@types/http-errors": "^1.6.1",
     "@types/js-md5": "^0.4.2",
-    "@types/jsonwebtoken": "^7.2.6",
+    "@types/jsonwebtoken": "^7.2.7",
     "@types/koa": "^2.0.45",
     "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-helmet": "^3.1.2",
     "@types/koa-json": "^2.0.18",
     "@types/koa-jwt": "^3.3.0",
+    "@types/koa-multer": "^1.0.0",
     "@types/koa-router": "^7.0.28",
+    "@types/koa2-cors": "^2.0.1",
     "@types/mocha": "^5.2.0",
-    "@types/mongoose": "^5.0.10",
+    "@types/mongoose": "^5.0.14",
     "@types/ms": "^0.7.30",
+    "@types/node": "^10.1.2",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
-    "mocha": "^5.1.1",
+    "mocha": "^5.2.0",
     "mochawesome": "^3.0.2",
-    "nodemon": "^1.17.3",
-    "ts-node": "^6.0.0",
+    "mongodb": "^3.0.8",
+    "nodemon": "^1.17.4",
+    "ts-node": "^6.0.3",
     "typescript": "^2.8.3"
   }
 }

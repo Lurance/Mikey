@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "esnext",
     "module": "commonjs",
     "outDir": "./dist",
-    "declaration": true,
-    "declarationDir": "./@types",
     "sourceMap": true,
     "removeComments": true,
     "noImplicitAny": false,
@@ -16,8 +14,8 @@
       "typings"
     ]
   },
-  "compileOnSave": true,
   "includes": [
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
