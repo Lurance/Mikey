@@ -38,7 +38,6 @@ export class TodoController {
     async getTodos(@Param('date') date: string,
                    @State('user') user: Payload
     ): Promise<ITodo[]> {
-        console.log(user)
         return await this.todoService.todoModel.find({
             createdAt: {
                 $gte: new Date(date).getTime(),

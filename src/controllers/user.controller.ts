@@ -1,10 +1,8 @@
 import {
-    Authorized,
     BadRequestError,
-    BodyParam, Controller, Get,
-    JsonController, Params,
+    BodyParam,
+    JsonController,
     Post,
-    State,
     UnauthorizedError
 } from "routing-controllers"
 
@@ -17,6 +15,7 @@ import {IUser, Payload, User, UserType} from "../model/User"
 import {UserService} from "../service/user.service"
 
 import * as md5 from "js-md5"
+
 import {Environment} from "../config/environments"
 
 
