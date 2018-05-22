@@ -2,8 +2,9 @@ import {genNonDuplicateID} from "../helpers/genNonDuplicateID"
 import {Schema} from "mongoose"
 import {mongoose} from "../config/conn"
 import md5 = require("js-md5")
+import {Environment} from "../config/environments"
 
-export enum Usertype {
+export enum UserType {
     administrator = 1,
     customer
 }
@@ -15,15 +16,23 @@ export enum OpenStatus {
     All
 }
 
+export interface Payload {
+    id: string
+    openid: string,
+    usertype: UserType,
+    friendkey: string,
+    expiresOn: number
+}
+
 export interface IUser extends mongoose.Document {
-    openid?: string;
-    username?: string;
-    password?: string;
-    usertype: Usertype;
-    friendkey: string;
-    friends?: IUser[];
-    openstatus: OpenStatus;
-    integral: number;
+    openid?: string,
+    username?: string,
+    password?: string,
+    usertype: UserType,
+    friendkey: string,
+    friends?: IUser[],
+    openstatus: OpenStatus,
+    integral: number
 }
 
 const userSchema = new Schema({

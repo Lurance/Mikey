@@ -12,7 +12,7 @@ import Axios from "axios"
 
 import wechatConfig from '../config/weChat'
 
-import {IUser, User} from "../model/User"
+import {IUser, Payload, User, UserType} from "../model/User"
 
 import {UserService} from "../service/user.service"
 
@@ -26,7 +26,7 @@ export class UserController {
     }
 
     @Post('/login')
-    async wechatLogin(@BodyParam('code', {required: true}) code: string): Promise<{ usertype: number, jwt: { token: string, expiresOn: number } }> {
+    async wechatLogin(@BodyParam('code', {required: true}) code: string): Promise<{usertype: UserType, jwt: {token: string, expiresOn: number}}> {
         try {
             const res = await Axios.get(`https://api.weixin.qq.com/sns/jscode2session?appid=${wechatConfig.appid}&secret=${wechatConfig.appsecret}&js_code=${code}&grant_type=authorization_code`)
             const openid = res.data.openid
@@ -51,7 +51,7 @@ export class UserAdminController {
     }
 
     @Post('/login')
-    async doAdminLogin(@BodyParam('username', {required: true}) username: string, @BodyParam('password', {required: true}) password: string): Promise<{ usertype: number, jwt: { token: string, expiresOn: number } }> {
+    async doAdminLogin(@BodyParam('username', {required: true}) username: string, @BodyParam('password', {required: true}) password: string): Promise<{usertype: UserType, jwt: {token: string, expiresOn: number}}> {
         const u = await this.userService.userModel.findOne({username: username, password: md5(password), usertype: 1})
         if (u) {
             return this.userService.signUser(u)
@@ -61,8 +61,8 @@ export class UserAdminController {
     }
 
     @Post('/admin_user')
-    async createAdministrator(@BodyParam('username') username: string,
-                              @BodyParam('password') password: string
+    async createAdministrator(@BodyParam('username', {required: true}) username: string,
+                              @BodyParam('password', {required: true}) password: string
     ) {
         if (Environment.identity === 'development') {
             if (await this.userService.userModel.count({username: username})) {
@@ -72,7 +72,7 @@ export class UserAdminController {
                     username: username,
                     password: password,
                     usertype: 1
-                })).toJSON()
+                }))
             }
         } else {
             throw new BadRequestError()

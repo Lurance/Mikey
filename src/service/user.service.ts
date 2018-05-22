@@ -1,4 +1,4 @@
-import {IUser, User} from "../model/User"
+import {IUser, Payload, User, UserType} from "../model/User"
 import {sign} from "jsonwebtoken"
 import {Environment} from "../config/environments"
 import ms = require("ms")
@@ -13,7 +13,7 @@ export class UserService {
         this.userModel = User
     }
 
-    public signUser(user: IUser): { usertype: number, jwt: { token: string, expiresOn: number } } {
+    public signUser(user: IUser): {usertype: UserType, jwt: {token: string, expiresOn: number}} {
         const payload = {
             id: user.id,
             openid: user.openid,

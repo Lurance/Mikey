@@ -18,11 +18,16 @@ import {Action} from "routing-controllers/Action"
 
 import {Container} from "typedi"
 
+import {TodoController} from "./controllers/todo.controller"
+
+import {HomeController} from "./controllers/home.controller"
+
 useContainer(Container)
 
 export const createHttpServer = async () => {
 
     const koa = new Koa()
+
 
     if (Environment.identity  !== 'production') koa.use(json())
 
@@ -42,8 +47,11 @@ export const createHttpServer = async () => {
     useKoaServer(koa, {
         routePrefix: '/api',
         controllers: [
-            UserController
+            UserController,
+            TodoController,
+            HomeController
         ],
+        classTransformer: false,
         development: true
     })
 
@@ -52,6 +60,7 @@ export const createHttpServer = async () => {
         controllers: [
             UserAdminController,
         ],
+        classTransformer: false,
         development: true,
         authorizationChecker: async (action: Action, roles: any[]): Promise<boolean> => {
             const payload = action.context.state.user || null

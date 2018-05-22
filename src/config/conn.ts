@@ -9,6 +9,7 @@ switch (Environment.identity) {
             .catch(err => console.log(err))
 }
 
+
 mongoose.connection
     .once('error', err => console.error(`mongodb connect error:\n${err}`))
     .once('open', () => {
