@@ -10,7 +10,7 @@ import Axios from "axios"
 
 import wechatConfig from '../config/weChat'
 
-import {IUser, Payload, User, UserType} from "../model/User"
+import {UserType} from "../model/User"
 
 import {UserService} from "../service/user.service"
 

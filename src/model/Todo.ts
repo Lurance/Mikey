@@ -16,7 +16,7 @@ export interface ITodo extends mongoose.Document {
     type: TodoType,
     content: string,
     rank: TodoRank,
-    createdAt: string,
+    createdAt: Date,
     endAt: string,
     is_activate: boolean
 }

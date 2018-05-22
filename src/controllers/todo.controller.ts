@@ -48,6 +48,20 @@ export class TodoController {
         })
     }
 
+    @Get('/todo/date/:year_month')
+    async getTodosDateSet(@Param('year_month') year_month: string, @State('user') user: Payload) {
+        let res = []
+        await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}})
+            .then(data => {
+                data.forEach(t => {
+                    res.push(`${t.createdAt.getFullYear()}/${t.createdAt.getMonth() + 1}/${t.createdAt.getDate()}`)
+                })
+            })
+
+
+        return Array.from(new Set(res.filter(v => Number(v.split('/')[1] == Number(new Date().getMonth() + 1)))))
+    }
+
     @Put('/todo/:id')
     async UpdateTodo(@Param('id') id: string,
                      @Body() todo: ITodo,
