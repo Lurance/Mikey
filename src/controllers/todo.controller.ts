@@ -21,12 +21,14 @@ export class TodoController {
     async createTodo(@BodyParam('type', {required: true}) type: TodoType,
                      @BodyParam('content', {required: true}) content: string,
                      @BodyParam('rank', {required: true}) rank: TodoRank,
+                     @BodyParam('createdAt', {required: true}) createdAt: string,
                      @BodyParam('endAt') endAt: string,
                      @State('user') user: Payload
     ): Promise<ITodo> {
         return (await this.todoService.todoModel.create({
             user: user.id,
             type: type,
+            createdAt: createdAt,
             content: content.trim(),
             rank: rank,
             endAt: endAt,
@@ -41,7 +43,8 @@ export class TodoController {
         return await this.todoService.todoModel.find({
             createdAt: {
                 $gte: new Date(date).getTime(),
-                $lte: new Date(date).getTime() + ms('1d')
+                $lt: new Date(date).getTime() + ms('1d')
+
             },
             is_activate: true,
             user: user.id
@@ -51,7 +54,7 @@ export class TodoController {
     @Get('/todo/date/:year_month')
     async getTodosDateSet(@Param('year_month') year_month: string, @State('user') user: Payload) {
         let res = []
-        await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}})
+        await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}, is_activate: true})
             .then(data => {
                 data.forEach(t => {
                     res.push(`${t.createdAt.getFullYear()}/${t.createdAt.getMonth() + 1}/${t.createdAt.getDate()}`)
