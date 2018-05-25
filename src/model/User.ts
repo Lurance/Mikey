@@ -55,8 +55,7 @@ const userSchema = new Schema({
     },
     friendkey: {
         type: String,
-        required: true,
-        default: genNonDuplicateID(5)
+        required: false,
     },
     openstatus: {
         type: Number,
@@ -72,6 +71,7 @@ const userSchema = new Schema({
 })
 
 userSchema.pre<IUser>('save', function (next) {
+    this.friendkey = genNonDuplicateID(5)
     if (this.password) {
         this.password = md5(this.password);
     }

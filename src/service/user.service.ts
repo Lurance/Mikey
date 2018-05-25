@@ -4,12 +4,13 @@ import {Environment} from "../config/environments"
 import ms = require("ms")
 import {Service} from "typedi"
 import {Model} from "mongoose"
+import {TodoService} from "./todo.service"
 
 @Service()
 export class UserService {
     public userModel: Model<IUser>
 
-    constructor() {
+    constructor(private todoService: TodoService) {
         this.userModel = User
     }
 
@@ -31,6 +32,14 @@ export class UserService {
                 expiresOn: Date.now() + ms(Environment.jwtExpires)
             }
         }
+    }
+
+    public async createNewCustomer(openid: string): Promise<IUser> {
+        const newUser = await this.userModel.create({
+            openid: openid
+        })
+        this.todoService.createDefaultTodo(newUser._id)
+        return newUser
     }
 }
 

@@ -37,6 +37,6 @@ export class HomeController {
             }
         ];
 
-        return mockWords[Math.ceil(Math.random() * mockWords.length)]
+        return mockWords[Math.floor(Math.random() * mockWords.length)]
     }
 }

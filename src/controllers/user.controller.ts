@@ -33,9 +33,8 @@ export class UserController {
             if (oldUser) {
                 return this.userService.signUser(oldUser)
             } else {
-                return this.userService.signUser(await this.userService.userModel.create({
-                    openid: openid
-                }))
+                const newUser = await this.userService.createNewCustomer(openid)
+                return this.userService.signUser(newUser)
             }
         } catch (e) {
             console.log(e)
@@ -67,11 +66,11 @@ export class UserAdminController {
             if (await this.userService.userModel.count({username: username})) {
                 throw new BadRequestError('重复的用户名')
             } else {
-                return (await this.userService.userModel.create({
+                return await this.userService.userModel.create({
                     username: username,
                     password: password,
                     usertype: 1
-                }))
+                })
             }
         } else {
             throw new BadRequestError()

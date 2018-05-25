@@ -25,14 +25,18 @@ export class TodoController {
                      @BodyParam('endAt') endAt: string,
                      @State('user') user: Payload
     ): Promise<ITodo> {
-        return (await this.todoService.todoModel.create({
+        const newTodo =  await this.todoService.todoModel.create({
             user: user.id,
             type: type,
             createdAt: createdAt,
             content: content.trim(),
             rank: rank,
             endAt: endAt,
-        })).toJSON()
+        })
+        if (newTodo.type === 2) {
+            this.todoService.generateLongTimeTodo(newTodo)
+        }
+        return newTodo
     }
 
 

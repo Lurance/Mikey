@@ -17,8 +17,10 @@ export interface ITodo extends mongoose.Document {
     content: string,
     rank: TodoRank,
     createdAt: Date,
-    endAt: string,
-    is_activate: boolean
+    endAt: Date,
+    is_activate: boolean,
+    is_done: boolean,
+    user: string
 }
 
 const todoSchema = new Schema({
@@ -34,7 +36,7 @@ const todoSchema = new Schema({
     content: {
         type: String,
         required: true,
-        maxlength: 20
+        maxlength: 25
     },
     rank: {
         type: Number,
