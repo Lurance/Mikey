@@ -38,7 +38,7 @@ export class UserService {
         const newUser = await this.userModel.create({
             openid: openid
         })
-        this.todoService.createDefaultTodo(newUser._id)
+        await this.todoService.createDefaultTodo(newUser._id)
         return newUser
     }
 }

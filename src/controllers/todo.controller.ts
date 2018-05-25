@@ -11,6 +11,7 @@ import {TodoService} from "../service/todo.service"
 import {ITodo, TodoRank, TodoType} from "../model/Todo"
 import {Payload} from "../model/User"
 import ms = require("ms")
+import {genNonDuplicateID} from "../helpers/genNonDuplicateID"
 
 @JsonController()
 export class TodoController {
@@ -34,7 +35,9 @@ export class TodoController {
             endAt: endAt,
         })
         if (newTodo.type === 2) {
-            this.todoService.generateLongTimeTodo(newTodo)
+            const longtimekey = genNonDuplicateID(5)
+            await newTodo.update({longtimekey: longtimekey})
+            this.todoService.generateLongTimeTodo(newTodo, longtimekey)
         }
         return newTodo
     }
@@ -50,7 +53,6 @@ export class TodoController {
                 $lt: new Date(date).getTime() + ms('1d')
 
             },
-            is_activate: true,
             user: user.id
         })
     }
@@ -58,7 +60,7 @@ export class TodoController {
     @Get('/todo/date/:year_month')
     async getTodosDateSet(@Param('year_month') year_month: string, @State('user') user: Payload) {
         let res = []
-        await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}, is_activate: true})
+        await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}})
             .then(data => {
                 data.forEach(t => {
                     res.push(`${t.createdAt.getFullYear()}/${t.createdAt.getMonth() + 1}/${t.createdAt.getDate()}`)
@@ -66,7 +68,7 @@ export class TodoController {
             })
 
 
-        return Array.from(new Set(res.filter(v => Number(v.split('/')[1] == Number(new Date().getMonth() + 1)))))
+        return Array.from(new Set(res))
     }
 
     @Put('/todo/:id')
@@ -81,11 +83,13 @@ export class TodoController {
     }
 
     @Delete('/todo/:id')
-    @OnUndefined(204)
     async deleteTodo(@Param('id') id: string,
-                     @State('user') user: Payload): Promise<void> {
-        await this.todoService.todoModel.update({_id: id, user: user.id}, {
-            is_activate: false
-        })
+                     @State('user') user: Payload): Promise<boolean> {
+
+        const rt = await this.todoService.todoModel.findOneAndRemove({user: user.id, _id: id})
+        if (rt.type === 2) {
+            await this.todoService.todoModel.deleteMany({user: user.id, longtimekey: rt.longtimekey})
+        }
+        return true
     }
 }

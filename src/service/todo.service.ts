@@ -2,6 +2,7 @@ import {Service} from "typedi"
 import {Model} from "mongoose"
 import {ITodo, Todo} from "../model/Todo"
 import ms = require("ms")
+import {genNonDuplicateID} from "../helpers/genNonDuplicateID"
 
 @Service()
 export class TodoService {
@@ -43,7 +44,7 @@ export class TodoService {
         })
     }
 
-    public async generateLongTimeTodo(todo: ITodo): Promise<void> {
+    public async generateLongTimeTodo(todo: ITodo, longtimekey: string): Promise<void> {
         console.log(todo.createdAt.getTime())
 
         for (let startTime = todo.createdAt.getTime() + ms('1d'); startTime < todo.endAt.getTime(); startTime += ms('1d')) {
@@ -52,7 +53,7 @@ export class TodoService {
                 content: todo.content,
                 type: todo.type,
                 rank: todo.rank,
-                is_activate: todo.is_activate,
+                longtimekey: longtimekey,
                 is_done: todo.is_done,
                 endAt: todo.endAt,
                 createdAt: startTime

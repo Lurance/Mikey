@@ -16,9 +16,9 @@ export interface ITodo extends mongoose.Document {
     type: TodoType,
     content: string,
     rank: TodoRank,
+    longtimekey: string,
     createdAt: Date,
     endAt: Date,
-    is_activate: boolean,
     is_done: boolean,
     user: string
 }
@@ -42,6 +42,10 @@ const todoSchema = new Schema({
         type: Number,
         required: true
     },
+    longtimekey: {
+        type: String,
+        required: false
+    },
     createdAt: {
         type: Date,
         required: true,
@@ -52,11 +56,6 @@ const todoSchema = new Schema({
         required: function () {
             return this.type === 2
         }
-    },
-    is_activate: {
-        type: Boolean,
-        required: true,
-        default: true
     },
     is_done: {
         type: Boolean,

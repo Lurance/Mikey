@@ -1,6 +1,6 @@
 import {BodyParam, Get, JsonController, Post} from "routing-controllers"
 
-import Axios from "axios"
+import Axios, {AxiosPromise, AxiosResponse} from "axios"
 
 import seniverseConfig from '../config/seniverse'
 
@@ -24,19 +24,17 @@ export class HomeController {
     // 目前是mock的
     // TODO 逻辑拉取每日一句
     @Get('/home/word')
-    getDayWords(): { text: string } {
-        const mockWords: {text: string}[] = [
-            {
-                text: '谦虚使人进步'
-            },
-            {
-                text: '失败乃成功之母'
-            },
-            {
-                text: '小荷才露尖尖角，早有蜻蜓立上头'
+    async getDayWords() {
+        return (async function f() {
+            const res = await Axios.get<{hitokoto: string}>('https://v1.hitokoto.cn/?c=d')
+            if (res.data.hitokoto.length > 25) {
+                return await f()
+            } else {
+                return {
+                    text: res.data.hitokoto
+                }
             }
-        ];
+        })();
 
-        return mockWords[Math.floor(Math.random() * mockWords.length)]
     }
 }
