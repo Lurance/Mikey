@@ -45,7 +45,6 @@ export class TodoService {
     }
 
     public async generateLongTimeTodo(todo: ITodo, longtimekey: string): Promise<void> {
-        console.log(todo.createdAt.getTime())
 
         for (let startTime = todo.createdAt.getTime() + ms('1d'); startTime < todo.endAt.getTime(); startTime += ms('1d')) {
             this.todoModel.create({
