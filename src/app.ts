@@ -22,6 +22,8 @@ import {TodoController} from "./controllers/todo.controller"
 
 import {HomeController} from "./controllers/home.controller"
 
+import {EvaluateController} from "./controllers/evaluate.controller"
+
 useContainer(Container)
 
 export const createHttpServer = async () => {
@@ -49,7 +51,8 @@ export const createHttpServer = async () => {
         controllers: [
             UserController,
             TodoController,
-            HomeController
+            HomeController,
+            EvaluateController
         ],
         classTransformer: false,
         development: true
