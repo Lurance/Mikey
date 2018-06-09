@@ -93,18 +93,30 @@ Mocha v 5.2.0
 |                 |          |
 |                 |          |
 |   用户打开某分享  | ------ > |                            ------ > 取得shareData，生成sharePage
-|                 |    |     |
-|                 |    |     | ------ > 请求URl
-|-----------——————|    |
-                       |
-                       |
-                    
-                    如果不是好友
-                    提示加波好友
-                       |
-                       |
-                       |
-                    转到加好友逻辑      
-                 
+|                 |          |
+|                 |          | ------ > 请求URl
+|-----------——————|    
+                       
+                       
+                  
+            
+```
 
+
+## 运行须知
+
+> * 目前版本并未提供单元测试，以后会提供基于Mocha的单元测试
+
+> * 由于隐私问题已经移除src/config/目录下的相关配置文件。具体有weChat.ts以及seniverse.ts文件。
+如果需要和微信小程序搭配使用需自行添加
+
+```typescript
+interface WeChatConfig {
+  appid: string,
+  appsecret: string
+}
+
+interface SeniverseConfig {
+  apiKey: string
+}
 ```
