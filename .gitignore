@@ -11,3 +11,5 @@ src/config/seniverse.ts
 
 dist/src/config/weChat.js
 
+dist/src/config/seniverse.js
+
