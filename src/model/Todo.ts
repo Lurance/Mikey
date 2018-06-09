@@ -36,7 +36,7 @@ const todoSchema = new Schema({
     content: {
         type: String,
         required: true,
-        maxlength: 25
+        maxlength: 35
     },
     rank: {
         type: Number,

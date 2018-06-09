@@ -1,6 +1,6 @@
 {
   "name": "mikey",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "这是参加腾讯全国小程序比赛的项目的公共后端库",
   "main": "index.js",
   "scripts": {

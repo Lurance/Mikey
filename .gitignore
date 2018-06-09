@@ -1,11 +1,13 @@
+*.js.map
+
 .idea
-.idea/*
+
 
 node_modules
-node_modules/*
 
 src/config/weChat.ts
+
 src/config/seniverse.ts
 
-dist
-dist/*
+dist/src/config/weChat.js
+

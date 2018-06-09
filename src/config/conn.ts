@@ -7,6 +7,13 @@ switch (Environment.identity) {
         mongoose.connect(`mongodb://${Environment.dbHost}:${Environment.dbPort}/${Environment.dbName}`)
             .then()
             .catch(err => console.log(err))
+        break
+    case 'production':
+        // 此处防止生产环境下的MongoDB相关连接配置
+        mongoose.connect(`mongodb://${Environment.dbHost}:${Environment.dbPort}/${Environment.dbName}`)
+            .then()
+            .catch(err => console.log(err))
+        break
 }
 
 

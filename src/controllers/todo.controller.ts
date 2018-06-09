@@ -2,7 +2,7 @@ import {
     Body,
     BodyParam, Delete,
     Get,
-    JsonController, OnUndefined,
+    JsonController,
     Param,
     Post, Put,
     State
@@ -62,7 +62,7 @@ export class TodoController {
         let res = []
         await this.todoService.todoModel.find({user: user.id, createdAt: {$gte: new Date(year_month).getTime(), $lte: new Date(year_month).getTime() + ms('31d')}})
             .then(data => {
-                data.forEach(t => {~
+                data.forEach(t => {
                     res.push(`${t.createdAt.getFullYear()}/${t.createdAt.getMonth() + 1}/${t.createdAt.getDate()}`)
                 })
             })
@@ -76,10 +76,16 @@ export class TodoController {
                      @Body() todo: ITodo,
                      @State('user') user: Payload)
         : Promise<ITodo> {
-        return await this.todoService.todoModel.findOneAndUpdate({
+        const rt =  await this.todoService.todoModel.findOneAndUpdate({
             _id: id,
             user: user.id
         }, todo, {new: true})
+        if (rt.type === 2) {
+            delete todo._id
+            delete todo.createdAt
+            await this.todoService.todoModel.update({longtimekey: rt.longtimekey, user: user.id}, todo, {multi: true})
+        }
+        return rt
     }
 
     @Delete('/todo/:id')

@@ -1,8 +1,8 @@
 import {
     BadRequestError,
-    BodyParam,
-    JsonController,
-    Post,
+    BodyParam, Get,
+    JsonController, OnUndefined, Param,
+    Post, State,
     UnauthorizedError
 } from "routing-controllers"
 
@@ -10,7 +10,7 @@ import Axios from "axios"
 
 import wechatConfig from '../config/weChat'
 
-import {UserType} from "../model/User"
+import {IUser, Payload, UserType} from "../model/User"
 
 import {UserService} from "../service/user.service"
 
@@ -18,6 +18,7 @@ import * as md5 from "js-md5"
 
 import {Environment} from "../config/environments"
 
+import ms = require("ms")
 
 @JsonController()
 export class UserController {
@@ -39,6 +40,44 @@ export class UserController {
         } catch (e) {
             console.log(e)
             throw new UnauthorizedError()
+        }
+    }
+
+    @Post('/userinfo')
+    @OnUndefined(204)
+    async saveUserInfoFromWechat(@BodyParam('avatarUrl', {required: true}) avatarUrl: string,
+                                 @BodyParam('nickName', {required: true}) nickName: string,
+                                 @State('user') user: Payload): Promise<void> {
+        await this.userService.userModel.update({_id: user.id}, {
+            avatarUrl: avatarUrl,
+            nickName: nickName
+        })
+    }
+
+    @Post('/share')
+    @OnUndefined(204)
+    shareEvaluate(@State('user') user: Payload, @BodyParam('shareKey', {required: true}) shareKey: string): void {
+        this.userService.shareModel.create({
+            user: user.id,
+            key: shareKey,
+            expiresAt: Date.now() + ms(Environment.shareKeyExpires)
+        })
+    }
+
+    @Get('/share/:shareKey')
+    async getShareEvaluateData(@Param('shareKey') shareKey: string) {
+        const s = await this.userService.shareModel.findOne({key: shareKey})
+            .populate('user')
+
+        if (new Date() > s.expiresAt) {
+            throw new BadRequestError()
+        } else {
+            const data = await this.userService.getEvaluateDataFromUser((s.user as IUser)._id)
+            return {
+                data: data,
+                avatarUrl: (s.user as IUser).avatarUrl,
+                nickName: (s.user as IUser).nickName
+            }
         }
     }
 }

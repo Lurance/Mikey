@@ -40,6 +40,7 @@ export const createHttpServer = async () => {
     }).unless({
         path: [
             /\/api\/login/,
+            /\/api\/share\/./,
             (() => {if (Environment.identity === 'development') return /\/admin\/api\/admin_user/ })()
         ]
     }))
@@ -55,7 +56,7 @@ export const createHttpServer = async () => {
             EvaluateController
         ],
         classTransformer: false,
-        development: true
+        development: Environment.identity === 'development'
     })
 
     useKoaServer(koa, {
@@ -64,7 +65,7 @@ export const createHttpServer = async () => {
             UserAdminController,
         ],
         classTransformer: false,
-        development: true,
+        development: Environment.identity === 'development',
         authorizationChecker: async (action: Action, roles: any[]): Promise<boolean> => {
             const payload = action.context.state.user || null
             if (payload) {
